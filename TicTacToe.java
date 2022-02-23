@@ -50,8 +50,8 @@ public class TicTacToe {
                 // the game ends
 
 		     // prints result of game and ask if you want to play again
-		}while(Utils.console.readLine().compareToIgnoreCase("y") == 0)
-      
+		}while(Utils.console.readLine().compareToIgnoreCase("y") == 0);
+
 
     }
 }

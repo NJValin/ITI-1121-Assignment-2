@@ -176,7 +176,7 @@ public class TicTacToeGame {
 			CellValue x = board[i];
 			return x;
 		}
-		catch (Exeption e) {
+		catch (Exception e) {
 			System.out.println("Error: Input is Invalid");
 			return null;
 		}
