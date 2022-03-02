@@ -200,45 +200,43 @@ public class TicTacToeGame {
 		// otherwise, place x or o in the index i, then
 		//if the game state is still PLAYING, then check if the current move change the state
 		try{
-      if (board[i]==(CellValue.EMPTY)){
-      	if (gameState.equals(GameState.XWIN) || gameState.equals(GameState.OWIN)){
-        	System.out.println("Game already finished");
-        		if (level%2==0){
-         			board[i] = CellValue.X;
-         			level++;
-         			setGameState(i);
+      		if (board[i]==(CellValue.EMPTY)){
+      			if (gameState.equals(GameState.XWIN) || gameState.equals(GameState.OWIN)){
+        			System.out.println("Game already finished");
+        			if (level%2==0){
+         				board[i] = CellValue.X;
+         				level++;
+         				setGameState(i);
 
-          	}
-            else{
-              board[i] = CellValue.O;
-							setGameState(i);
-              level++;
-          }
-        }
-        else{
-          if (level%2==0){
-            board[i] = CellValue.X;
-            level++;
-
+          			}
+            		else{
+              			board[i] = CellValue.O;
+						setGameState(i);
+              			level++;
+          			}
+        		}
+        		else{
+          			if (level%2==0){
+            			board[i] = CellValue.X;
+            			level++;
 						setGameState(i);
 
-          }
-          else{
-            board[i] = CellValue.O;
-            level++;
-
+          			}
+          			else{
+            			board[i] = CellValue.O;
+            			level++;
 						setGameState(i);
 
-          }
-        }
-      }
-      else{
-        System.out.println("Please choose an empty cell(1-"+board.length+").");
-      }
-    }
-    catch(IndexOutOfBoundsException e) {
-      System.out.println("Please enter a existing cell(1-"+board.length+").");//Cell that doesn't exist
-    }
+          			}
+        		}
+      		}
+      		else{
+        		System.out.println("Please choose an empty cell(1-"+board.length+").");
+      		}
+    	}
+    	catch(IndexOutOfBoundsException e) {
+      		System.out.println("Please enter a existing cell(1-"+board.length+").");//Cell that doesn't exist
+    	}
 
 	}
 
@@ -258,13 +256,128 @@ public class TicTacToeGame {
     *  the index of the cell in the array board that has just
     * been set
   	*/
-
+	/*
 	private void setGameState(int index){
 		// your code here
 
 
 
 	}
+	*/
+	private void setGameState(int i){ //changed index to i
+	//i=i-1;
+	int a = i+1;
+	int b = a%columns;
+
+	//javac TicTacToe.java
+	if (level == board.length) {
+			gameState = GameState.DRAW;
+		}
+			if (board[i].equals(CellValue.O)) {
+				if (b==0) {
+					b=columns;
+
+				}
+				//((a+columns*2) <= board.length) + ((a-columns*2) > 0) +
+
+				//System.out.println("Sups"+ board[i]+""+board[i+1]+""+board[i+2]+""+board[i-1]+""+board[i-2]+""+board[i+columns]+""+board[i+2*columns]+""+board[i-columns]+""+board[i-2*columns]);
+
+				   if (b+2 <= columns && board[i].equals(board[i+1]) && board[i].equals(board[i+2])) { //left to right
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b-2 > 0 && board[i].equals(board[i-1]) && board[i].equals(board[i-2])){ //right to left
+						   gameState = GameState.OWIN;
+				   }
+				   else if ((a+columns*2) <= board.length && board[i].equals(board[i+columns]) && board[i].equals(board[i+2*columns])){ //up to down
+
+						   gameState = GameState.OWIN;
+				   }
+				   else if ((a-columns*2) > 0 && board[i].equals(board[i-columns]) && board[i].equals(board[i-2*columns])){ //down to up
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b+2 <= columns && (a-columns*2) > 0 && board[i].equals(board[i-columns+1]) && board[i].equals(board[i-columns*2+2])){ //downleft to upright
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b-2 > 0 && (i+columns*2) <= board.length && board[i].equals(board[i+columns-1]) && board[i].equals(board[i+columns*2-2])){ //upright to downleft
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b-2 > 0 && (i-columns*2) > 0 && board[i].equals(board[i-columns-1]) && board[i].equals(board[i-columns*2-2])){ //downright to upleft
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b+2 <= columns && (i+columns*2) <= board.length && board[i].equals(board[i+columns+1]) && board[i].equals(board[i+columns*2+2])){ //upleft to downright
+						   gameState = GameState.OWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && board[i].equals(board[i+1]) && board[i].equals(board[i-1])) { //right and left
+					   gameState = GameState.OWIN;
+				   }
+				   else if ((a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns]) && board[i].equals(board[i-columns])){ //up and down
+					   gameState = GameState.OWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && (a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns-1]) && board[i].equals(board[i-columns+1])){ //upright and downleft
+					   gameState = GameState.OWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && (a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns+1]) && board[i].equals(board[i-columns-1])){ //upleft and downright
+					   gameState = GameState.OWIN;
+				   }
+				   else if (level == board.length) {
+						gameState = GameState.DRAW;
+					}
+
+			}
+			else if (board[i].equals(CellValue.X)) {
+				if (b==0) {
+					b=columns;
+
+				}
+				//((a+columns*2) <= board.length) + ((a-columns*2) > 0) +
+				//System.out.println("O:"+ board[i] + a + (b+2 <= columns) + (b-2 > 0) +  (board[i]) + (board[i-columns+1]) + (board[i-columns*2+2])+i + (b-2 > 0) + (i-columns*2) );
+				//System.out.println("Sups"+ board[i]+""+board[i+1]+""+board[i+2]+""+board[i-1]+""+board[i-2]+""+board[i+columns]+""+board[i+2*columns]+""+board[i-columns]+""+board[i-2*columns]);
+
+
+				   if (b+2 <= columns && board[i].equals(board[i+1]) && board[i].equals(board[i+2])) { //left to right
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b-2 > 0 && board[i].equals(board[i-1]) && board[i].equals(board[i-2])){ //right to left
+						   gameState = GameState.XWIN;
+				   }
+				   else if ((a+columns*2) <= board.length && board[i].equals(board[i+columns]) && board[i].equals(board[i+2*columns])){ //up to down
+
+						   gameState = GameState.XWIN;
+				   }
+				   else if ((a-columns*2) > 0 && board[i].equals(board[i-columns]) && board[i].equals(board[i-2*columns])){ //down to up
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b+2 <= columns && (a-columns*2) > 0 && board[i].equals(board[i-columns+1]) && board[i].equals(board[i-columns*2+2])){ //downleft to upright
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b-2 > 0 && (a+columns*2) <= board.length && board[i].equals(board[i+columns-1]) && board[i].equals(board[i+columns*2-2])){ //upright to downleft
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b-2 > 0 && (a-columns*2) > 0 && board[i].equals(board[i-columns-1]) && board[i].equals(board[i-columns*2-2])){ //downright to upleft
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b+2 <= columns && (a+columns*2) <= board.length && board[i].equals(board[i+columns+1]) && board[i].equals(board[i+columns*2+2])){ //upleft to downright
+						   gameState = GameState.XWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && board[i].equals(board[i+1]) && board[i].equals(board[i-1])) { //right and left
+					   gameState = GameState.XWIN;
+				   }
+				   else if ((a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns]) && board[i].equals(board[i-columns])){ //up and down
+					   gameState = GameState.XWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && (a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns-1]) && board[i].equals(board[i-columns+1])){ //upright and downleft
+					   gameState = GameState.XWIN;
+				   }
+				   else if (b+1 <= columns && (a%columns)-1 > 0 && (a+columns) <= board.length && (a-columns) > 0  && board[i].equals(board[i+columns+1]) && board[i].equals(board[i-columns-1])){ //upleft and downright
+					   gameState = GameState.XWIN;
+				   }
+				   else if (level == board.length) {
+						gameState = GameState.DRAW;
+					}
+
+
+	}
+   }
 
 
 
