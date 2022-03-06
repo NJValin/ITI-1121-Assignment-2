@@ -1,4 +1,4 @@
-//Student 1 name: Neil Valin
+    //Student 1 name: Neil Valin
 //Student 2 name: Vishal Bhat
 
 /**
@@ -37,6 +37,10 @@ public class TicTacToe {
             lines = Integer.parseInt(args[0]);
             columns = Integer.parseInt(args[1]);
             win = Integer.parseInt(args[2]);
+            if ( win >columns && win >lines) {
+                System.out.println("Size of win to high, going with default");
+                win = 3;
+            }
         }
         else if (args.length ==2) {
             lines = Integer.parseInt(args[0]);
@@ -60,8 +64,9 @@ public class TicTacToe {
 		     // create object for TicTacToeGame
 		     // for loop that prints who's turn it is, the board, and who is to play, until
                 // the game ends
-            game = new TicTacToeGame(lines, columns, win);
 
+            game = new TicTacToeGame(lines, columns, win);
+System.out.println(game.getSizeWin());
             while(game.getGameState()==GameState.PLAYING) {
 
                 // your code here

@@ -201,30 +201,30 @@ public class TicTacToeGame {
 		//if the game state is still PLAYING, then check if the current move change the state
 		try{
       		if (board[i]==(CellValue.EMPTY)){
-      			if (gameState.equals(GameState.XWIN) || gameState.equals(GameState.OWIN)){
+      			if (gameState.equals(GameState.XWIN) || gameState.equals(GameState.OWIN)) {
         			System.out.println("Game already finished");
         			if (level%2==0){
          				board[i] = CellValue.X;
-         				level++;
+         				//level++;
          				setGameState(i);
 
           			}
             		else{
               			board[i] = CellValue.O;
 						setGameState(i);
-              			level++;
+              			//level++;
           			}
         		}
         		else{
           			if (level%2==0){
             			board[i] = CellValue.X;
-            			level++;
+            			//level++;
 						setGameState(i);
 
           			}
           			else{
             			board[i] = CellValue.O;
-            			level++;
+            			//level++;
 						setGameState(i);
 
           			}
@@ -265,6 +265,237 @@ public class TicTacToeGame {
 	}
 	*/
 	private void setGameState(int i){ //changed index to i
+		 	//i=i-1;
+			int n=sizeWin;
+		 	int a = i+1;
+		 	int b = a%columns;
+		 	level++;
+		 	//int n = 4; //win req
+
+		 	//javac TicTacToe.java
+		 	//System.out.println("level: " + level + " board length: " + board.length);
+		if (level == board.length) {
+				gameState = GameState.DRAW;
+			}
+        if (board[i].equals(CellValue.O)) {
+        		if (b==0) {
+        			b=columns;
+        			//System.out.println("In here");
+        		}
+        		//((a+columns*2) <= board.length) + ((a-columns*2) > 0) +
+       		//System.out.println("O:"+ board[i] + a + (b+2 <= columns) + (b-2 > 0) +  (board[i]) + (board[i-columns+1]) + (board[i-columns*2+2])+i + (b-2 > 0) + (i-columns*2) );
+       		//System.out.println("Sups"+ board[i]+""+board[i+1]+""+board[i+2]+""+board[i-1]+""+board[i-2]+""+board[i+columns]+""+board[i+2*columns]+""+board[i-columns]+""+board[i-2*columns]);
+
+       		//LEFT TO RIGHT: FOR LOOP MOVES RIGHT TO LEFT
+        	//Things to consider: the second condition for the initial if statement only needs to be true if x>0
+			for(int x = 0; x<n; x++) {
+				//System.out.println(x+ " hi " + board[i-x]);
+				try {
+					//System.out.println(x+" "+ board[i-x] );
+        			for(int y = 1; y<n; y++) {
+						//System.out.println(x + y + "hi" + board[i-x] + board[i+y-x]);
+        				if (board[i-x].equals(board[i+y-x])&&board[i-x].equals(CellValue.O)) {
+							if (y==(n-1)) {
+
+                				gameState = GameState.OWIN;
+							}
+
+        				}
+						else {
+							y=n;
+						}
+        			}
+				}
+				catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+
+        	}
+			//DOWN TO UP: FOR LOOP MOVES UP TO DOWN
+			for(int x = 0; x<n; x++) {
+        		try {
+        			for(int y = 1; y<n; y++) {
+        				if (board[i-(x*columns)].equals(board[i-columns*y-(x*columns)])&&board[i-(x*columns)].equals(CellValue.O)) {
+							if (y==(n-1)) {
+								gameState = GameState.OWIN;
+							}
+        				}
+						else {
+							y=n;
+						}
+        			}
+
+                }
+				catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+        	}
+        	//DOWN TO UP: FOR LOOP MOVES UP TO DOWN
+        	//for(int x = 0; x<n; x++) {
+        	//	if ((a-columns*(n-1)) > 0 && (a+columns*(n-1+x)) <= board.length) {
+
+        	//		for(int y = 1; y<n; y++) {
+        	//			if (board[i-(x*columns)].equals(board[i-columns*y-(x*columns)])) {
+            //    			gameState = GameState.OWIN;
+        	//			}
+        	//		}
+
+            //    }
+        	//}
+			for(int x = 0; x<n; x++) {
+				try {
+					for(int y = 1; y<n; y++) {
+						if (board[i-(x*columns)-x].equals(board[i-columns*y-(x*columns)-x])&&board[i-(x*columns)-x].equals(CellValue.O)) {
+							if (y==(n-1)) {
+								gameState = GameState.OWIN;
+							}
+						}
+						else {
+							y=n;
+						}
+					}
+				}
+				catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+			}
+        	//DOWNLEFT TO UPRIGHT: FOR LOOP MOVES UPRIGHT TO DOWNLEFT
+        	//for(int x = 0; x<n; x++) {
+        	//	if ( b+(n-1)-x <= columns && (b-n+1-x) > 0   &&  (a-columns*(n-1)+columns*x) > 0 && (a+columns*(n-1)+x+columns*x) <= board.length ) {
+        	//		for(int y = 1; y<n; y++) {
+        	//			if (board[i-(x*columns)-x].equals(board[i-columns*y-(x*columns)-x])) {
+            //    			gameState = GameState.OWIN;
+        	//			}
+        	//		}
+
+            //    }
+        	//}
+			for(int x = 0; x<n; x++) {
+        		try {
+        			for(int y = 1; y<n; y++) {
+        				if (board[i+(x*columns)].equals(board[i+columns*y+(x*columns)]) && board[i+(x*columns)].equals(CellValue.O)) {
+							if (y==(n-1)) {
+								gameState = GameState.OWIN;
+							}
+        				}
+						else {
+							y=n;
+						}
+        			}
+                }
+				catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+        	}
+        	//UPLEFT TO DOWNRIGHT: FOR LOOP MOVES DOWNRIGHT TO UPLEFT
+        	//for(int x = 0; x<n; x++) {
+        	//	if ( b+(n-1)-x <= columns && (b-n+1-x) > 0 && (a-columns*(n-1+x)) > 0 && (a+columns*(n-1)+x) <= board.length) {
+        	//		for(int y = 1; y<n; y++) {
+        	//			if (board[i+(x*columns)].equals(board[i+columns*y+(x*columns)])) {
+            //    			gameState = GameState.OWIN;
+        	//			}
+        	//		}
+            //    }
+        	//}
+		}
+		else if (board[i].equals(CellValue.X)) {
+			if (b==0) {
+				b=columns;
+
+			}
+			for(int x = 0; x<n; x++) {
+				try {
+        			for(int y = 1; y<n; y++) {
+        				if (board[i-x].equals(board[i+y-x])&&board[i-x].equals(CellValue.X)) {
+							if (y==(n-1)) {
+
+                				gameState = GameState.XWIN;
+							}
+
+        				}
+						else {
+							y=n;
+						}
+        			}
+				}
+				catch (ArrayIndexOutOfBoundsException e) {
+
+				}
+
+        	}
+		//DOWN TO UP: FOR LOOP MOVES UP TO DOWN
+		//for(int x = 0; x<n; x++) {
+		//	if ((a-columns*(n-1)) > 0 && (a+columns*(n-1+x)) <= board.length) {
+
+		//		for(int y = 1; y<n; y++) {
+		//			if (board[i-(x*columns)].equals(board[i-columns*y-(x*columns)])) {
+		//    			gameState = GameState.OWIN;
+		//			}
+		//		}
+
+		//    }
+		//}
+		//DOWN TO UP: FOR LOOP MOVES UP TO DOWN
+		for(int x = 0; x<n; x++) {
+			try {
+				for(int y = 1; y<n; y++) {
+					if (board[i-(x*columns)].equals(board[i-columns*y-(x*columns)])&&board[i-(x*columns)].equals(CellValue.X)) {
+						if (y==(n-1)) {
+							gameState = GameState.XWIN;
+						}
+					}
+					else {
+						y=n;
+					}
+				}
+
+			}
+			catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+		}
+		for(int x = 0; x<n; x++) {
+			try {
+				for(int y = 1; y<n; y++) {
+					if (board[i-(x*columns)-x].equals(board[i-columns*y-(x*columns)-x])&&board[i-(x*columns)-x].equals(CellValue.X)) {
+						if (y==(n-1)) {
+							gameState = GameState.XWIN;
+						}
+					}
+					else {
+						y=n;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+		}
+		//DOWNLEFT TO UPRIGHT: FOR LOOP MOVES UPRIGHT TO DOWNLEFT
+
+		for(int x = 0; x<n; x++) {
+			try {
+				for(int y = 1; y<n; y++) {
+					if (board[i+(x*columns)].equals(board[i+columns*y+(x*columns)]) && board[i+(x*columns)].equals(CellValue.X)) {
+						if (y==(n-1)) {
+							gameState = GameState.XWIN;
+						}
+					}
+					else {
+						y=n;
+					}
+				}
+			}
+			catch (ArrayIndexOutOfBoundsException e) {
+
+			}
+		}
+
+		}
+	}
+
+
+	/*
 	//i=i-1;
 	int a = i+1;
 	int b = a%columns;
@@ -375,9 +606,8 @@ public class TicTacToeGame {
 						gameState = GameState.DRAW;
 					}
 
+					*/
 
-	}
-   }
 
 
 
