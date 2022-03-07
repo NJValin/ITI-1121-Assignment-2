@@ -38,14 +38,16 @@ public class TicTacToe {
             columns = Integer.parseInt(args[1]);
             win = Integer.parseInt(args[2]);
             if ( win >columns && win >lines) {
-                System.out.println("Size of win to high, going with default");
+                System.out.println("Size of win too high, going with default");
                 win = 3;
             }
         }
-        else if (args.length ==2) {
+        if (args.length ==2) {
             lines = Integer.parseInt(args[0]);
             columns = Integer.parseInt(args[1]);
+            System.out.println("Going with default win size.");
         }
+        
 
 		//define an array (say p) of two players (use interface playe for the refernce)
 		// The first playe is an object of type HumanPlayer and
@@ -66,7 +68,6 @@ public class TicTacToe {
                 // the game ends
 
             game = new TicTacToeGame(lines, columns, win);
-System.out.println(game.getSizeWin());
             while(game.getGameState()==GameState.PLAYING) {
 
                 // your code here
